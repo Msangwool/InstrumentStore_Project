@@ -25,10 +25,19 @@
         <form id="form" action="" method="get">
             <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
         </form>
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/info'">내 정보</button>
+        </form>
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/basket'">장바구니</button>
+        </form>
         {% else %}
         아무 권한을 가지지 않은 페이지입니다.<br>
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main/login'">로그인</button>
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">로그인</button>
+        </form><br>
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/signUp'">회원가입</button>
         </form><br>
         {% endif %}
     
