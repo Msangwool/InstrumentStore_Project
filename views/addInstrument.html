@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{title}}-{{html}}</title>
+</head>
+
+<body>
+    <p>
+        상품추가 페이지입니다. - 접근 관리자 : {{name}}<br><br>
+
+        <form id="form" action="" method="post">
+            <input style="width: 200px" type="text" name="name" placeholder="INSTRUMENT_NAME" required /><br>
+            <input style="width: 200px" type="text" name="cost" placeholder="COST" required /><br>
+            <input style="width: 200px" type="text" name="age" placeholder="AGE" /><br>
+            <br>
+            <input type="radio" name="category" value="percussion" checked />타악기
+            <input type="radio" name="category" value="wind" />관악기
+            <input type="radio" name="category" value="string" />현악기
+            <input type="radio" name="category" value="keyboard" />건반악기
+            <br><br>
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}{{link}}/create/{{name}}'">추가하기</button>
+        </form>
+    </p>
+
+</body>
+
+</html>

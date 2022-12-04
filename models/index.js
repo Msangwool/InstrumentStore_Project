@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 const User = require('./user');
-const Comment = require('./comment');
+const Administrator = require('./administrator');
+const Address = require('./address');
+const Basket = require('./basket');
+const Instrument = require('./instrument');
+const Order = require('./order');
+
 
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
@@ -12,13 +17,25 @@ const sequelize = new Sequelize(
 const db = {
     sequelize,
     User,
-    Comment
+    Administrator,
+    Address,
+    Basket,
+    Instrument,
+    Order,
 };
 
 User.init(sequelize);
-Comment.init(sequelize);
+Administrator.init(sequelize);
+Address.init(sequelize);
+Basket.init(sequelize);
+Instrument.init(sequelize);
+Order.init(sequelize);
 
 User.associate(db);
-Comment.associate(db);
+Administrator.associate(db);
+Address.associate(db);
+Basket.associate(db);
+Instrument.associate(db);
+Order.associate(db);
 
 module.exports = db;

@@ -9,7 +9,7 @@ module.exports = class User extends Sequelize.Model {
                 primaryKey: true
             },
             password: {
-                type: Sequelize.STRING(100),
+                type: Sequelize.TEXT,
                 allowNull: true
             },
             name: {
@@ -33,6 +33,9 @@ module.exports = class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        db.User.hasMany(db.Comment, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
+        // db.User.hasMany(db.Administrator, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
+        // db.User.hasMany(db.Address, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
+        // db.User.hasMany(db.Basket, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
+        // db.User.hasMany(db.Order, { foreignKey: 'userId', sourceKey: 'id'});
     }
 };

@@ -1,6 +1,7 @@
 const path = require('path');
 
 const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 
 const express = require('express');
 const morgan = require('morgan');
@@ -13,13 +14,12 @@ const { sequelize } = require('./models');
 const passport = require('passport');
 const passportConfig = require('./passport');
 
+const getPermissionRouter = require('./routes/getPermission');
+const administratorRouter = require('./routes/administrator');
 const authRouter = require('./routes/auth');
-const commentRouter = require('./routes/comment');
 const userRouter = require('./routes/user');
-const indexRouter = require('./routes');
-// const startPageRouter = require('./routes');
-// const administratorRouter = require('./routes/administrator');
-// const reviewRouter = require('./routes/review');
+const mainRouter = require('./routes/main');
+const startRouter = require('./routes')
 
 dotenv.config();
 passportConfig();
@@ -58,16 +58,19 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/administrator/getPermission', getPermissionRouter);
+app.use('/administrator', administratorRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
-app.use('/comment', commentRouter);
-app.use('/', indexRouter);
+app.use('/main', mainRouter);
+app.use('/', startRouter);
 
-app.use((req, res) =>
-    res.render('index', {
+app.use((req, res) => 
+    res.render('startPage', {
         title: require('./package.json').name,
         port: app.get('port'),
-        user: req.user
+        html: 'startPage',
+        user: req.user,
     }));
 
 app.use((err, req, res, next) => {

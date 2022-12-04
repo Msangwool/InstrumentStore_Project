@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{title}}-{{html}}</title>
+</head>
+
+<body>
+    <p>
+        mainPage
+    </p>
+        {% if isTrue %}
+        adminPage (관리자 권한을 얻은 상태의 페이지) - {{name}} 님.<br><br>
+        
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
+        </form>
+
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}{{link}}/create/{{name}}'">악기 추가</button>
+        </form>
+        {% elseif user %}
+        userPage (유저 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
+        
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
+        </form>
+        {% else %}
+        아무 권한을 가지지 않은 페이지입니다.<br>
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main/login'">로그인</button>
+        </form><br>
+        {% endif %}
+    
+        <p>
+            타악기<br>
+            {% for userId in users %}
+                <a href="http://localhost:{{port}}/user/delete/{{userId}}">http://localhost:{{port}}/user/delete/{{userId}}</a><br>
+            {% endfor %}
+        </p>
+    
+        <p>
+            관악기<br>
+            {% for userId in users %}
+                <a href="http://localhost:{{port}}/user/{{userId}}/comments">http://localhost:{{port}}/user/{{userId}}/comments</a><br>
+            {% endfor %}
+        </p>
+    
+        <p>
+            현악기<br>
+            {% for userId in users %}
+                <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br>
+            {% endfor %}
+        </p>
+
+        <p>
+            건반악기<br>
+            {% for userId in users %}
+                <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br>
+            {% endfor %}
+        </p>
+    </p>
+</body>
+
+</html>
