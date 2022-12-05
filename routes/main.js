@@ -17,7 +17,7 @@ router.route('/')
             res.redirect('/administrator');
         } else {
             const instruments = await Instrument.findAll({
-                attributes: ['name', 'cost', 'category', 'creatorId']
+                attributes: ['instrumentId', 'name', 'cost', 'category', 'creatorId']
             });
             const percussions = getPercussions(instruments);
             const winds = getWinds(instruments);
@@ -37,17 +37,40 @@ router.route('/')
         }
     });
 
-
-router.get('/users', async (req, res, next) => {
-    try {
-        const users = await User.findAll({
-            attributes: ['id', 'name', 'description', 'phoneNumber', 'email']
+router.get('/:instrumentId', async (req, res, next) => {
+    const admin = await Administrator.findOne({                 // 로그인 인증을 받고 넘어 왔을 때,
+        where: { userId: req?.user?.id || null }                // req.user.id 즉, 사용자 아이디가 Administrator 테이블의 userID에 존재하면
+    })
+    const instruments = await Instrument.findOne({
+        where: { instrumentId: req.params.instrumentId || null }
+    })
+    if (admin) {
+        // 관리자 권한
+        if (instruments.creatorId == admin.userId) {
+            res.render('instrumentPage', {
+                title: require('../package.json').name,
+                port: process.env.PORT,
+                html: 'updateConfirm',
+                isTrue: true,
+                user: req.user,
+            });
+        } else {
+            res.write("<script>alert('No permission')</script>");
+            res.write("<script>window.location=\"/main\"</script>");
+        }
+    } else if (req.user) {
+        // 사용자 권한
+        res.render('instrumentPage', {
+            title: require('../package.json').name,
+            port: process.env.PORT,
+            html: 'purchase',
+            user: req.user,
+            instruments,
         });
-        res.json(users);
-    } catch (err) {
-        console.error(err);
-        next(err);
+    } else {
+        // 권한 x -> redirect rogin
+        res.redirect('/user/login');
     }
-});
+})
 
 module.exports = router;

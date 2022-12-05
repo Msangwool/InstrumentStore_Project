@@ -1,6 +1,5 @@
 const express = require('express');
 const environment = require('nunjucks/src/environment');
-const { INTEGER } = require('sequelize');
 const { Administrator, Instrument } = require('../models');
 const { getPercussions, getWinds, getStrings, getKeyboards } = require('../provide/instrument-info');
 const { isLoggedIn } = require('./helpers');
@@ -10,13 +9,6 @@ const router = express.Router();
 
 // localhost:3000/administrator
 router.get('/', isLoggedIn, async (req, res) => {
-    // res.render('login', {
-    //     title: require('../package.json').name,
-    //     port: process.env.PORT,
-    //     html: 'login',
-    //     description: '관리자 계정 로그인',
-    //     link: '/auth/login',
-    // })
     const admin = await Administrator.findOne({                     // admin 계정을 탐색.
         where: { userId: req.user.id }
     })
@@ -24,7 +16,7 @@ router.get('/', isLoggedIn, async (req, res) => {
         isTrue = true                                        // admin 계정이 존재한다면 isTrue값을 true로 바꿈
 
         const instruments = await Instrument.findAll({
-            attributes: ['name', 'cost', 'category', 'creatorId']
+            attributes: ['instrumentId', 'name', 'cost', 'category', 'creatorId']
         });
         const percussions = getPercussions(instruments);
         const winds = getWinds(instruments);

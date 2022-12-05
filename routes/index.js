@@ -1,22 +1,10 @@
 const express = require('express');
-const { User } = require('../models');
 
 
 const router = express.Router();
 
-router.get('/data', async (req, res, next) => {
-    try {
-        const users = await User.findAll({
-            attributes: ['id', 'name', 'description'],
-            include: {
-                model: Comment
-            }
-        });
-        res.json(users);
-    } catch (err) {
-        console.error(err);
-        next(err);
-    }
+router.get('/', async (req, res, next) => {
+    res.redirect('/main');
 });
 
 module.exports = router;

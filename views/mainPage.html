@@ -9,93 +9,126 @@
     <p>
         mainPage
     </p>
+    <div>
         {% if isTrue %}
         adminPage (관리자 권한을 얻은 상태의 페이지) - {{name}} 님.<br><br>
-        
+
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
+            <button style="width: 200px" type="button"
+                onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
         </form>
 
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}{{link}}/createInstrument'">악기 추가</button>
+            <button style="width: 200px" type="button"
+                onclick="location.href='http://localhost:{{port}}{{link}}/createInstrument'">악기 추가</button>
         </form>
         {% elseif user %}
         userPage (유저 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
-        
+
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
+            <button style="width: 200px" type="button"
+                onclick="location.href='http://localhost:{{port}}/auth/logout'">로그아웃</button>
         </form>
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/info'">내 정보</button>
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/info'">내
+                정보</button>
         </form>
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/basket'">장바구니</button>
+            <button style="width: 200px" type="button"
+                onclick="location.href='http://localhost:{{port}}/user/basket'">장바구니</button>
         </form>
         {% else %}
         아무 권한을 가지지 않은 페이지입니다.<br>
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">로그인</button>
+            <button style="width: 200px" type="button"
+                onclick="location.href='http://localhost:{{port}}/user/login'">로그인</button>
         </form><br>
         <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/signUp'">회원가입</button>
+            <button style="width: 200px" type="button"
+                onclick="location.href='http://localhost:{{port}}/user/signUp'">회원가입</button>
         </form><br>
         {% endif %}
-    
-        <p>
-            타악기<br>
-            {% for percussion in percussions %}
+    </div>
+
+    <style>
+        #container {
+            display: flex;
+        }
+
+        #box-percussion {
+            width: 25%;
+        }
+
+        #box-wind {
+            width: 25%;
+        }
+
+        #box-string {
+            width: 25%;
+        }
+
+        #box-keyboard {
+            width: 25%;
+        }
+    </style>
+    <div id='container'>
+        <div id='box-percussion'>
+            <p>
+                타악기<br>
+                {% for percussion in percussions %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main/{{percussion[3]}}'">
                     이름 : {{percussion[0]}}<br>
                     가격 : {{percussion[1]}}<br>
                     작성자 : {{percussion[2]}}<br>
                 </button>
             </form><br>
-                <!-- <a href="http://localhost:{{port}}/user/delete/{{userId}}">http://localhost:{{port}}/user/delete/{{userId}}</a><br> -->
             {% endfor %}
-        </p>
-    
-        <p>
-            관악기<br>
-            {% for wind in winds %}
+            </p>
+        </div>
+        <div id='box-wind'>
+            <p>
+                관악기<br>
+                {% for wind in winds %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main/{{wind[3]}}'">
                     이름 : {{wind[0]}}<br>
                     가격 : {{wind[1]}}<br>
                     작성자 : {{wind[2]}}<br>
                 </button>
             </form><br>
-                <!-- <a href="http://localhost:{{port}}/user/{{userId}}/comments">http://localhost:{{port}}/user/{{userId}}/comments</a><br> -->
             {% endfor %}
-        </p>
-    
-        <p>
-            현악기<br>
-            {% for string in strings %}
+            </p>
+        </div>
+        <div id='box-string'>
+            <p>
+                현악기<br>
+                {% for string in strings %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main/{{string[3]}}'">
                     이름 : {{string[0]}}<br>
                     가격 : {{string[1]}}<br>
                     작성자 : {{string[2]}}<br>
                 </button>
             </form><br>
-                <!-- <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br> -->
             {% endfor %}
-        </p>
-
-        <p>
-            건반악기<br>
-            {% for keyboard in keyboards %}
+            </p>
+        </div>
+        <div id='box-keyboard'>
+            <p>
+                건반악기<br>
+                {% for keyboard in keyboards %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main/{{keyboard[3]}}'">
                     이름 : {{keyboard[0]}}<br>
                     가격 : {{keyboard[1]}}<br>
                     작성자 : {{keyboard[2]}}<br>
                 </button>
             </form><br>
-                <!-- <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br> -->
             {% endfor %}
-        </p>
+            </p>
+        </div>
+    </div>
     </p>
 </body>
 

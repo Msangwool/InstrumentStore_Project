@@ -8,14 +8,24 @@
 <body>
     <p>
         login
-        <form id="form" action="{{link}}" method="post">
-            <h3>{{description}}</h3>
-            <input style="width: 200px" type="text" name="id" placeholder="ID" required /><br>
-            <input style="width: 200px" type="password" name="password" placeholder="PASSWORD" required /><br>
-            <button style="width: 200px" type="submit" >확인</button>
-            <br>
-        </form>
+    <form id="form" action="{{link}}" method="post">
+        <h3>{{description}}</h3>
+        <input style="width: 200px" type="text" name="id" placeholder="ID" required /><br>
+        <input style="width: 200px" type="password" name="password" placeholder="PASSWORD" required /><br>
+        <button style="width: 200px" type="submit">확인</button>
+        <br>
+    </form>
     </p>
+
+    <br><br>
+
+    <p>
+    <form id="form" action="" method="get">
+        <button style="width: 200px" type="button"
+            onclick="location.href='http://localhost:{{port}}/user/signUp'">회원가입</button>
+    </form><br>
+    </p>
+
 </body>
 
 </html>

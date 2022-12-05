@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{title}}-{{html}}</title>
+</head>
+
+<body>
+    {% if isTrue %}
+    adminPage (관리자 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
+    
+    {% else %}
+    userPage (유저 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
+    상품 정보<br>
+    상품명 : {{instruments.name}}<br>
+    상품가격 : {{instruments.cost}}<br>
+    상품카테고리 : {{instruments.category}}<br>
+    상품개수 : {{instruments.count}}<br>
+    상품설명 : {{instruments.description}}<br>
+    작성자 : {{instruments.creatorId}}<br>
+    {% endif %}
+</body>
+
+</html>
