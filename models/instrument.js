@@ -20,6 +20,10 @@ module.exports = class Instrument extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: false
             },
+            count: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
             creatorId: {        // FK - administrator 이름
                 type: Sequelize.STRING(100),
                 allowNull: false
