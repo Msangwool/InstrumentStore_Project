@@ -24,6 +24,10 @@ module.exports = class Instrument extends Sequelize.Model {
                 type: Sequelize.INTEGER,
                 allowNull: false
             },
+            description: {
+                type: Sequelize.TEXT,
+                allowNull: true
+            },
             creatorId: {        // FK - administrator 이름
                 type: Sequelize.STRING(100),
                 allowNull: false

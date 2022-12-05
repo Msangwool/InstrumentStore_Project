@@ -1,6 +1,7 @@
 const express = require('express');
 const environment = require('nunjucks/src/environment');
-const { User, Administrator } = require('../models');
+const { User, Administrator, Instrument } = require('../models');
+const { getPercussions, getWinds, getStrings, getKeyboards } = require('../provide/instrument-info');
 
 const { isLoggedIn } = require('./helpers');
 
@@ -15,11 +16,23 @@ router.route('/')
         if (admin) {
             res.redirect('/administrator');
         } else {
+            const instruments = await Instrument.findAll({
+                attributes: ['name', 'cost', 'category', 'creatorId']
+            });
+            const percussions = getPercussions(instruments);
+            const winds = getWinds(instruments);
+            const strings = getStrings(instruments);
+            const keyboards = getKeyboards(instruments);
+
             res.render('mainPage', {
                 title: require('../package.json').name,
                 port: process.env.PORT,
                 html: 'mainPage',
-                user: req.user
+                user: req.user,
+                percussions,
+                winds,
+                strings,
+                keyboards,
             });
         }
     });

@@ -43,29 +43,57 @@
     
         <p>
             타악기<br>
-            {% for userId in users %}
-                <a href="http://localhost:{{port}}/user/delete/{{userId}}">http://localhost:{{port}}/user/delete/{{userId}}</a><br>
+            {% for percussion in percussions %}
+            <form id="form" action="" method="get">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                    이름 : {{percussion[0]}}<br>
+                    가격 : {{percussion[1]}}<br>
+                    작성자 : {{percussion[2]}}<br>
+                </button>
+            </form><br>
+                <!-- <a href="http://localhost:{{port}}/user/delete/{{userId}}">http://localhost:{{port}}/user/delete/{{userId}}</a><br> -->
             {% endfor %}
         </p>
     
         <p>
             관악기<br>
-            {% for userId in users %}
-                <a href="http://localhost:{{port}}/user/{{userId}}/comments">http://localhost:{{port}}/user/{{userId}}/comments</a><br>
+            {% for wind in winds %}
+            <form id="form" action="" method="get">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                    이름 : {{wind[0]}}<br>
+                    가격 : {{wind[1]}}<br>
+                    작성자 : {{wind[2]}}<br>
+                </button>
+            </form><br>
+                <!-- <a href="http://localhost:{{port}}/user/{{userId}}/comments">http://localhost:{{port}}/user/{{userId}}/comments</a><br> -->
             {% endfor %}
         </p>
     
         <p>
             현악기<br>
-            {% for userId in users %}
-                <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br>
+            {% for string in strings %}
+            <form id="form" action="" method="get">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                    이름 : {{string[0]}}<br>
+                    가격 : {{string[1]}}<br>
+                    작성자 : {{string[2]}}<br>
+                </button>
+            </form><br>
+                <!-- <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br> -->
             {% endfor %}
         </p>
 
         <p>
             건반악기<br>
-            {% for userId in users %}
-                <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br>
+            {% for keyboard in keyboards %}
+            <form id="form" action="" method="get">
+                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/login'">
+                    이름 : {{keyboard[0]}}<br>
+                    가격 : {{keyboard[1]}}<br>
+                    작성자 : {{keyboard[2]}}<br>
+                </button>
+            </form><br>
+                <!-- <a href="http://localhost:{{port}}/user/{{userId}}">http://localhost:{{port}}/user/{{userId}}</a><br> -->
             {% endfor %}
         </p>
     </p>
