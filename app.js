@@ -14,7 +14,6 @@ const { sequelize } = require('./models');
 const passport = require('passport');
 const passportConfig = require('./passport');
 
-const getPermissionRouter = require('./routes/getPermission');
 const administratorRouter = require('./routes/administrator');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
@@ -58,7 +57,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/administrator/getPermission', getPermissionRouter);
 app.use('/administrator', administratorRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);

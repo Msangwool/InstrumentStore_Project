@@ -26,10 +26,9 @@
     </p>
 
     <p>
-        사용자 정보 삭제<br>
-        {% for userId in users %}
-            <a href="http://localhost:{{port}}/user/delete/{{userId}}">http://localhost:{{port}}/user/delete/{{userId}}</a><br>
-        {% endfor %}
+        <form id="form" action="" method="get">
+            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/delete/{{user.id}}'">회원탈퇴</button>
+        </form>
     </p>
 </body>
 

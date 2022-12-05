@@ -110,6 +110,20 @@ router.get('/info', isLoggedIn, async (req, res, next) => {
     }
 });
 
+router.get('/delete/:id', async (req, res, next) => {
+    try {
+        const result = await User.destroy({
+            where: { id: req.params.id }
+        });
+
+        if (result) next();
+        else next(`There is no user with ${req.params.id}.`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+}, logout);
+
 router.post('/update', async (req, res, next) => {
     try {
         const result = await User.update({
