@@ -15,6 +15,7 @@ const passport = require('passport');
 const passportConfig = require('./passport');
 
 const administratorRouter = require('./routes/administrator');
+const instrumentRouter = require('./routes/instrument');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const mainRouter = require('./routes/main');
@@ -58,6 +59,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/administrator', administratorRouter);
+app.use('/instrument', instrumentRouter);
 app.use('/auth', authRouter);
 app.use('/user', userRouter);
 app.use('/main', mainRouter);

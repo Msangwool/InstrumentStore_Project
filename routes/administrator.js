@@ -1,7 +1,7 @@
 const express = require('express');
 const environment = require('nunjucks/src/environment');
 const { Administrator, Instrument } = require('../models');
-const { getPercussions, getWinds, getStrings, getKeyboards } = require('../provide/instrument-info');
+const provide = require("../provide/instrument-info.js");
 const { isLoggedIn } = require('./helpers');
 
 
@@ -15,14 +15,8 @@ router.get('/', isLoggedIn, async (req, res) => {
     if (admin) {                                            // passport로 권한을 얻고 url로 직접 접근하는 경우를 막음.
         isTrue = true                                        // admin 계정이 존재한다면 isTrue값을 true로 바꿈
 
-        const instruments = await Instrument.findAll({
-            attributes: ['instrumentId', 'name', 'cost', 'category', 'creatorId']
-        });
-        const percussions = getPercussions(instruments);
-        const winds = getWinds(instruments);
-        const strings = getStrings(instruments);
-        const keyboards = getKeyboards(instruments);
-
+        const { percussions, winds, strings, keyboards } = await provide.getALL();
+        
         res.render('mainPage', {
             title: require('../package.json').name,
             port: process.env.PORT,
@@ -85,5 +79,8 @@ router.route('/createInstrument')                                 // 상품 추�
     });
 
 
+router.route('/delete/:instrumentId');                                 // 상품 추가 요청
+
+router.route('/update/:instrumentId');
 
 module.exports = router;
