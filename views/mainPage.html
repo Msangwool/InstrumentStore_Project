@@ -23,10 +23,10 @@
                 onclick="location.href='http://localhost:{{port}}{{link}}/createInstrument'">악기 추가</button>
         </form>
 
-        <!-- <form id="form" action="" method="get">
+        <form id="form" action="" method="get">
             <button style="width: 200px" type="button"
-                onclick="location.href='http://localhost:{{port}}/instrument'">모든 악기 정보 보기</button>
-        </form> -->
+                onclick="location.href='http://localhost:{{port}}/instrument/info'">모든 악기 정보 보기</button>
+        </form>
         
         {% elseif user %}
         userPage (유저 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
@@ -41,7 +41,7 @@
         </form>
         <form id="form" action="" method="get">
             <button style="width: 200px" type="button"
-                onclick="location.href='http://localhost:{{port}}/user/basket'">장바구니</button>
+                onclick="location.href='http://localhost:{{port}}/basket'">장바구니</button>
         </form>
         {% else %}
         아무 권한을 가지지 않은 페이지입니다.<br>

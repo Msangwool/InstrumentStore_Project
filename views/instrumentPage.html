@@ -50,6 +50,15 @@
     </form>
     {% else %}
 
+            
+    <br>
+    <br>
+
+    <form id="form" action="/basket/create" method="post">
+        <input type="hidden" name="instrumentId" value="{{instruments.instrumentId}}"  /><br>
+        <input style="width: 200px" type="text" name="count" placeholder="COUNT" required/><br>
+        <button style="width: 200px" type="submit">장바구니 추가</button>
+    </form>
     {% endif %}
 </body>
 

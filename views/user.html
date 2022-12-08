@@ -12,14 +12,19 @@
         <img src="{{user.description}}" width="50" height="50">
         {% endif %}
         id : {{user.id}} <br>
-        phoneNumber : {{user.phoneNumber}} <br>
         email : {{user.email}} <br>
+        phoneNumber : {{user.phoneNumber}} <br>
+        {% if user.description %}
+        description : {{user.description}} <br>
+        {% endif %}
     </p>
 
     <p>
         <form id="form" action="update" method="post">
             사용자 정보 수정<br>
-            <input type="text" name="id" placeholder="ID" /><br>
+            <input type="text" name="name" placeholder="Name" /><br>
+            <input type="text" name="phoneNumber" placeholder="PhoneNumber" /><br>
+            <input type="text" name="email" placeholder="Email" /><br>
             <input type="description" name="description" placeholder="Description" /><br>
             <button type="submit">전송</button>
         </form>
