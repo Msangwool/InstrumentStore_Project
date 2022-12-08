@@ -10,6 +10,11 @@ router.route('/')
         res.redirect('/main');
     });
 
+router.get('/info', isLoggedIn, async (req, res, next) => {
+    const instruments = await Instrument.findAll({})
+    res.json(instruments);
+});
+
 router.get('/delete/:instrumentId', async (req, res, next) => {
     try {
         const result = await Instrument.destroy({
@@ -34,7 +39,7 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
     })
     if (admin) {    // 관리자 권한.
         const updateContext = {};
-        if (cost != undefined & cost.trim() != '') { 
+        if (cost != undefined & cost.trim() != '') {
             const instrument = await Instrument.findOne({ // 상품, 가격, 아이디를 비교함
                 where: {
                     name: name,
@@ -42,10 +47,10 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
                     creatorId: req.user.id,
                 }
             });
-            
+
             if (!instrument) {
                 updateContext['cost'] = cost
-            } else if (instrument.instrumentId != req.params.instrumentId){
+            } else if (instrument.instrumentId != req.params.instrumentId) {
                 res.write("<script>alert('Wrong Approach')</script>");
                 res.write(`<script>window.location=\"${link}\"</script>`);
                 return
@@ -55,13 +60,13 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
         if (category != undefined & category != '') { updateContext['category'] = category }
         if (content != undefined & content.trim() != '') { updateContext['description'] = content }
         const result = await Instrument.update(
-            updateContext, 
+            updateContext,
             {
-            where: { instrumentId: req.params.instrumentId }
+                where: { instrumentId: req.params.instrumentId }
             });
         if (result) {
-        res.write("<script>alert('update complete')</script>");
-        res.write(`<script>window.location=\"${link}\"</script>`);
+            res.write("<script>alert('update complete')</script>");
+            res.write(`<script>window.location=\"${link}\"</script>`);
         } else {
             res.write("<script>alert('update fail')</script>");
             res.write(`<script>window.location=\"${link}\"</script>`);
@@ -82,15 +87,19 @@ router.get('/:instrumentId', async (req, res, next) => {
     if (admin) {
         // 관리자 권한
         if (instruments.creatorId == admin.userId) {
-            res.render('instrumentPage', {
-                title: require('../package.json').name,
-                port: process.env.PORT,
-                html: 'updateConfirm',
-                isTrue: true,
-                user: req.user,
-                link: '/instrument/update',
-                instruments,
-            });
+            if (req.header('User-Agent').toLowerCase().match(/chrome/)) {
+                res.render('instrumentPage', {
+                    title: require('../package.json').name,
+                    port: process.env.PORT,
+                    html: 'updateConfirm',
+                    isTrue: true,
+                    user: req.user,
+                    link: '/instrument/update',
+                    instruments,
+                });
+            } else {
+                res.json(instruments);
+            }
         } else {
             res.write("<script>alert('No permission')</script>");
             res.write("<script>window.location=\"/main\"</script>");
@@ -102,6 +111,7 @@ router.get('/:instrumentId', async (req, res, next) => {
             port: process.env.PORT,
             html: 'purchase',                               // 구매 or 장바구니 목적.
             user: req.user,                                 // 구매는 아예 사라지고, 장바구니는 안 사라짐.대신 선택만 count 개수에 맞게 해주도록.
+            link: '/basket',
             instruments,
         });
     } else {

@@ -73,6 +73,29 @@ router.get('/info', isLoggedIn, async (req, res, next) => {
     }
 });
 
+router.post('/update', async (req, res, next) => {
+    try {
+        const { name, phoneNumber, email, description } = req.body;
+        const updateUser = {};
+        if (name != undefined & name.trim() != '') { updateUser['name'] = name }
+        if (phoneNumber != undefined & phoneNumber.trim() != '') { updateUser['phoneNumber'] = phoneNumber }
+        if (email != undefined & email.trim() != '') { updateUser['email'] = email }
+        if (description != undefined & description != '') { updateUser['description'] = description }
+        console.log(updateUser)
+        const result = await User.update(
+            updateUser,
+            {
+                where: { id: req.user.id }
+            });
+
+        if (result) res.json(updateUser);
+        else next(`There is no user with ${req.params.id}.`);
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+});
+
 router.get('/delete/:id', async (req, res, next) => {
     try {
         const result = await User.destroy({
