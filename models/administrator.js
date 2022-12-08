@@ -25,6 +25,6 @@ module.exports = class Administrator extends Sequelize.Model {
     }
 
     static associate(db) {
-        
+        db.Administrator.belongsTo(db.User, { foreignKey: 'userId', sourceKey: 'id' });
     }
 };

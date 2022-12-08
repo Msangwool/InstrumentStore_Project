@@ -45,7 +45,6 @@ module.exports = class Instrument extends Sequelize.Model {
     }
 
     static associate(db) {
-        // db.Administrator.belongTo(db.basket, { foreignKey: 'instrumentId', sourceKey: 'instrumentId', onDelete: 'cascade' });
-        // db.User.hasMany(db.basket, { foreignKey: 'instrumentId', sourceKey: 'instrumentId', onDelete: 'cascade' });
+        db.Instrument.belongsTo(db.User, { foreignKey: 'creatorId', sourceKey: 'id' });
     }
 };

@@ -10,11 +10,11 @@ module.exports = class Basket extends Sequelize.Model {
                 autoIncrement: true
             },
             userId: { // FK
-                type: Sequelize.BIGINT,
+                type: Sequelize.STRING(100),
                 allowNull: false
             },
             instrumentId: { // FK
-                type: Sequelize.BIGINT,
+                type: Sequelize.STRING(100),
                 allowNull: false
             },
             count: {
@@ -34,6 +34,6 @@ module.exports = class Basket extends Sequelize.Model {
     }
 
     static associate(db) {
-        // db.User.hasMany(db.Comment, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
+        db.Basket.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'id' });
     }
 };

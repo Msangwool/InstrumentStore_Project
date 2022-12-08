@@ -41,9 +41,8 @@ module.exports = class User extends Sequelize.Model {
     }
 
     static associate(db) {
-        // db.User.hasMany(db.Administrator, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
-        // db.User.hasMany(db.Address, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
-        // db.User.hasMany(db.Basket, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
-        // db.User.hasMany(db.Order, { foreignKey: 'userId', sourceKey: 'id'});
+        db.User.hasMany(db.Administrator, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
+        db.User.hasMany(db.Instrument, { foreignKey: 'creatorId', sourceKey: 'id', onDelete: 'cascade' });
+        db.User.hasMany(db.Basket, { foreignKey: 'userId', sourceKey: 'id', onDelete: 'cascade' });
     }
 };
