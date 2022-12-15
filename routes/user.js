@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt')
-const User = require('../models/user');
+const provideUser = require('../provide/user-provide.js');
 
 const { logout, isLoggedIn } = require('./helpers');
 
@@ -35,7 +35,8 @@ router.route('/signUp')
     .post(async (req, res, next) => {
         const { id, password, name, description, phoneNumber, email } = req.body;
 
-        const user = await User.findOne({ where: { id } });
+        const user = await provideUser.getTarget(id);
+
         if (user) {
             next('이미 등록된 사용자 아이디입니다.');
             return;
@@ -43,14 +44,7 @@ router.route('/signUp')
 
         try {
             const hash = await bcrypt.hash(password, 12);
-            await User.create({
-                id,
-                password: hash,
-                name,
-                description,
-                phoneNumber,
-                email,
-            });
+            await provideUser.createUser(id, hash, name, description, phoneNumber, email);
 
             res.redirect('/main');
         } catch (err) {
@@ -81,12 +75,7 @@ router.post('/update', async (req, res, next) => {
         if (phoneNumber != undefined & phoneNumber.trim() != '') { updateUser['phoneNumber'] = phoneNumber }
         if (email != undefined & email.trim() != '') { updateUser['email'] = email }
         if (description != undefined & description != '') { updateUser['description'] = description }
-        console.log(updateUser)
-        const result = await User.update(
-            updateUser,
-            {
-                where: { id: req.user.id }
-            });
+        const result = await provideUser.updateUser(updateUser, req.user.id);
 
         if (result) res.json(updateUser);
         else next(`There is no user with ${req.params.id}.`);
@@ -98,9 +87,7 @@ router.post('/update', async (req, res, next) => {
 
 router.get('/delete/:id', async (req, res, next) => {
     try {
-        const result = await User.destroy({
-            where: { id: req.params.id }
-        });
+        const result = await provideUser.destroyUser(req.user.id);
 
         if (result) next();
         else next(`There is no user with ${req.params.id}.`);

@@ -20,20 +20,21 @@
     </p>
 
     <p>
-        <form id="form" action="update" method="post">
-            사용자 정보 수정<br>
-            <input type="text" name="name" placeholder="Name" /><br>
-            <input type="text" name="phoneNumber" placeholder="PhoneNumber" /><br>
-            <input type="text" name="email" placeholder="Email" /><br>
-            <input type="description" name="description" placeholder="Description" /><br>
-            <button type="submit">전송</button>
-        </form>
+    <form id="form" action="update" method="post">
+        사용자 정보 수정<br>
+        <input type="text" name="name" placeholder="Name" /><br>
+        <input type="text" name="phoneNumber" placeholder="PhoneNumber" /><br>
+        <input type="text" name="email" placeholder="Email" /><br>
+        <input type="description" name="description" placeholder="Description" /><br>
+        <button type="submit">전송</button>
+    </form>
     </p>
 
     <p>
-        <form id="form" action="" method="get">
-            <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/user/delete/{{user.id}}'">회원탈퇴</button>
-        </form>
+    <form id="form" action="" method="get">
+        <button style="width: 200px" type="button"
+            onclick="location.href='http://localhost:{{port}}/user/delete/{{user.id}}'">회원탈퇴</button>
+    </form>
     </p>
 </body>
 

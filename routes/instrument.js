@@ -1,6 +1,7 @@
 const express = require('express');
 const { redirect } = require('express/lib/response');
-const { Administrator, Instrument } = require('../models');
+const provideAdministrator = require("../provide/administrator-provide.js");
+const provideInstrument = require("../provide/instrument-provide.js");
 const { logout, isLoggedIn } = require('./helpers');
 
 const router = express.Router();
@@ -11,15 +12,13 @@ router.route('/')
     });
 
 router.get('/info', isLoggedIn, async (req, res, next) => {
-    const instruments = await Instrument.findAll({})
+    const instruments = await provideInstrument.getAll();
     res.json(instruments);
 });
 
 router.get('/delete/:instrumentId', async (req, res, next) => {
     try {
-        const result = await Instrument.destroy({
-            where: { instrumentId: req.params.instrumentId }
-        });
+        const result = await provideInstrument.destroyInstrument(req.params.instrumentId);
 
         if (result) {
             res.redirect('/main');
@@ -34,19 +33,12 @@ router.get('/delete/:instrumentId', async (req, res, next) => {
 router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
     const { name, cost, count, category, content } = req.body;
     const link = '/instrument/' + req.params.instrumentId;
-    const admin = await Administrator.findOne({                 // 로그인 인증을 받고 넘어 왔을 때,
-        where: { userId: req?.user?.id || null }                // req.user.id 즉, 사용자 아이디가 Administrator 테이블의 userID에 존재하면
-    })
+    const admin = await provideAdministrator.getTarget((req?.user?.id) ? req.user.id : null);
+
     if (admin) {    // 관리자 권한.
         const updateContext = {};
         if (cost != undefined & cost.trim() != '') {
-            const instrument = await Instrument.findOne({ // 상품, 가격, 아이디를 비교함
-                where: {
-                    name: name,
-                    cost: cost,
-                    creatorId: req.user.id,
-                }
-            });
+            const instrument = await provideInstrument.duplicateCheck(name, cost, req.user.id);
 
             if (!instrument) {
                 updateContext['cost'] = cost
@@ -59,11 +51,8 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
         if (count != undefined & count.trim() != '') { updateContext['count'] = count }
         if (category != undefined & category != '') { updateContext['category'] = category }
         if (content != undefined & content.trim() != '') { updateContext['description'] = content }
-        const result = await Instrument.update(
-            updateContext,
-            {
-                where: { instrumentId: req.params.instrumentId }
-            });
+        const result = await provideInstrument.updateAll(updateContext, req.params.instrumentId);
+
         if (result) {
             res.write("<script>alert('update complete')</script>");
             res.write(`<script>window.location=\"${link}\"</script>`);
@@ -78,12 +67,9 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
 });
 
 router.get('/:instrumentId', async (req, res, next) => {
-    const admin = await Administrator.findOne({                 // 로그인 인증을 받고 넘어 왔을 때,
-        where: { userId: req?.user?.id || null }                // req.user.id 즉, 사용자 아이디가 Administrator 테이블의 userID에 존재하면
-    })
-    const instruments = await Instrument.findOne({
-        where: { instrumentId: req.params.instrumentId || null }
-    })
+    const admin = await provideAdministrator.getTarget((req?.user?.id) ? req.user.id : null);
+    const instruments = await provideInstrument.getTartget(req.params.instrumentId);
+
     if (admin) {
         // 관리자 권한
         if (instruments.creatorId == admin.userId) {

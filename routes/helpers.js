@@ -13,5 +13,5 @@ exports.logout = (req, res, next) => {
         if (err) { return next(err); }
         req.session.destroy();
         res.redirect('/main');
-      });
+    });
 };

@@ -27,7 +27,7 @@
             <button style="width: 200px" type="button"
                 onclick="location.href='http://localhost:{{port}}/instrument/info'">모든 악기 정보 보기</button>
         </form>
-        
+
         {% elseif user %}
         userPage (유저 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
 
@@ -83,7 +83,8 @@
                 타악기<br>
                 {% for percussion in percussions %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/instrument/{{percussion[3]}}'">
+                <button style="width: 200px" type="button"
+                    onclick="location.href='http://localhost:{{port}}/instrument/{{percussion[3]}}'">
                     이름 : {{percussion[0]}}<br>
                     가격 : {{percussion[1]}}<br>
                     작성자 : {{percussion[2]}}<br>
@@ -97,7 +98,8 @@
                 관악기<br>
                 {% for wind in winds %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/instrument/{{wind[3]}}'">
+                <button style="width: 200px" type="button"
+                    onclick="location.href='http://localhost:{{port}}/instrument/{{wind[3]}}'">
                     이름 : {{wind[0]}}<br>
                     가격 : {{wind[1]}}<br>
                     작성자 : {{wind[2]}}<br>
@@ -111,7 +113,8 @@
                 현악기<br>
                 {% for string in strings %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/instrument/{{string[3]}}'">
+                <button style="width: 200px" type="button"
+                    onclick="location.href='http://localhost:{{port}}/instrument/{{string[3]}}'">
                     이름 : {{string[0]}}<br>
                     가격 : {{string[1]}}<br>
                     작성자 : {{string[2]}}<br>
@@ -125,7 +128,8 @@
                 건반악기<br>
                 {% for keyboard in keyboards %}
             <form id="form" action="" method="get">
-                <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/instrument/{{keyboard[3]}}'">
+                <button style="width: 200px" type="button"
+                    onclick="location.href='http://localhost:{{port}}/instrument/{{keyboard[3]}}'">
                     이름 : {{keyboard[0]}}<br>
                     가격 : {{keyboard[1]}}<br>
                     작성자 : {{keyboard[2]}}<br>

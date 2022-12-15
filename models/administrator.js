@@ -11,7 +11,7 @@ module.exports = class Administrator extends Sequelize.Model {
             userId: {
                 type: Sequelize.STRING(100),
                 allowNull: false
-            } 
+            }
         }, {
             sequelize,
             timestamps: false,

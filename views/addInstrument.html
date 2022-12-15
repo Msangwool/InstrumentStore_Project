@@ -9,20 +9,21 @@
     <p>
         상품추가 페이지입니다. - 접근 관리자 : {{user.name}}<br><br>
 
-        <form id="form" action="{{link}}" method="post">
-            <input style="width: 200px" type="text" name="name" placeholder="INSTRUMENT_NAME" required /><br>
-            <input style="width: 200px" type="text" name="cost" placeholder="COST" required /><br>
-            <input style="width: 200px" type="text" name="count" placeholder="COUNT" /><br>
-            <br>
-            <input type="radio" name="category" value="percussion" checked />타악기
-            <input type="radio" name="category" value="wind" />관악기
-            <input type="radio" name="category" value="string" />현악기
-            <input type="radio" name="category" value="keyboard" />건반악기
-            <br><br>
-            <textarea style="width: 200px" type="textarea" name="content" rows="10" cols="50" placeholder="악기를 설명해주세요." ></textarea>
-            <br><br>
-            <button style="width: 200px" type="submit">추가하기</button>
-        </form>
+    <form id="form" action="{{link}}" method="post">
+        <input style="width: 200px" type="text" name="name" placeholder="INSTRUMENT_NAME" required /><br>
+        <input style="width: 200px" type="text" name="cost" placeholder="COST" required /><br>
+        <input style="width: 200px" type="text" name="count" placeholder="COUNT" /><br>
+        <br>
+        <input type="radio" name="category" value="percussion" checked />타악기
+        <input type="radio" name="category" value="wind" />관악기
+        <input type="radio" name="category" value="string" />현악기
+        <input type="radio" name="category" value="keyboard" />건반악기
+        <br><br>
+        <textarea style="width: 200px" type="textarea" name="content" rows="10" cols="50"
+            placeholder="악기를 설명해주세요."></textarea>
+        <br><br>
+        <button style="width: 200px" type="submit">추가하기</button>
+    </form>
     </p>
 
 </body>

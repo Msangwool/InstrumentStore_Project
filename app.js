@@ -67,7 +67,7 @@ app.use('/user', userRouter);
 app.use('/main', mainRouter);
 app.use('/', startRouter);
 
-app.use((req, res) => 
+app.use((req, res) =>
     res.render('startPage', {
         title: require('./package.json').name,
         port: app.get('port'),

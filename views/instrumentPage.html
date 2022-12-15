@@ -8,14 +8,14 @@
 <body>
     {% if isTrue %}
     adminPage (관리자 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
-    
+
     {% else %}
     userPage (유저 권한을 얻은 상태의 페이지) - {{user.name}} 님.<br><br>
 
     {% endif %}
     <form id="form" action="" method="get">
-        <button style="width: 200px" type="button"
-            onclick="location.href='http://localhost:{{port}}/main'">메인 화면</button>
+        <button style="width: 200px" type="button" onclick="location.href='http://localhost:{{port}}/main'">메인
+            화면</button>
     </form> <br><br>
     상품 정보<br>
     상품명 : {{instruments.name}}<br>
@@ -28,16 +28,17 @@
     {% if isTrue %}
     <h3>수정할 내용</h3>
     <form id="form" action="{{link}}/{{instruments.instrumentId}}" method="post">
-        <input type="hidden" name="name" value="{{instruments.name}}"  /><br>
-        <input style="width: 200px" type="text" name="cost" placeholder="COST"  /><br>
+        <input type="hidden" name="name" value="{{instruments.name}}" /><br>
+        <input style="width: 200px" type="text" name="cost" placeholder="COST" /><br>
         <input style="width: 200px" type="text" name="count" placeholder="COUNT" /><br>
         <br>
-        <input type="radio" name="category" value="percussion"  />타악기
+        <input type="radio" name="category" value="percussion" />타악기
         <input type="radio" name="category" value="wind" />관악기
         <input type="radio" name="category" value="string" />현악기
         <input type="radio" name="category" value="keyboard" />건반악기
         <br><br>
-        <textarea style="width: 200px" type="textarea" name="content" rows="10" cols="50" placeholder="설명 수정." ></textarea>
+        <textarea style="width: 200px" type="textarea" name="content" rows="10" cols="50"
+            placeholder="설명 수정."></textarea>
         <br>
         <button style="width: 200px" type="submit">수정하기</button>
     </form>
@@ -46,17 +47,18 @@
     <h3>악기 삭제</h3>
     <form id="form" action="" method="get">
         <button style="width: 200px" type="button"
-            onclick="location.href='http://localhost:{{port}}/instrument/delete/{{instruments.instrumentId}}'">악기 삭제</button>
+            onclick="location.href='http://localhost:{{port}}/instrument/delete/{{instruments.instrumentId}}'">악기
+            삭제</button>
     </form>
     {% else %}
 
-            
+
     <br>
     <br>
 
     <form id="form" action="/basket/create" method="post">
-        <input type="hidden" name="instrumentId" value="{{instruments.instrumentId}}"  /><br>
-        <input style="width: 200px" type="text" name="count" placeholder="COUNT" required/><br>
+        <input type="hidden" name="instrumentId" value="{{instruments.instrumentId}}" /><br>
+        <input style="width: 200px" type="text" name="count" placeholder="COUNT" required /><br>
         <button style="width: 200px" type="submit">장바구니 추가</button>
     </form>
     {% endif %}

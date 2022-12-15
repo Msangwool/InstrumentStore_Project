@@ -1,7 +1,7 @@
 const express = require('express');
 const environment = require('nunjucks/src/environment');
-const { Administrator, Instrument } = require('../models');
-const provide = require("../provide/instrument-info.js");
+const provideAdministrator = require("../provide/administrator-provide.js");
+const provideInstrument = require("../provide/instrument-provide.js");
 const { isLoggedIn } = require('./helpers');
 
 
@@ -9,14 +9,13 @@ const router = express.Router();
 
 // localhost:3000/administrator
 router.get('/', isLoggedIn, async (req, res) => {
-    const admin = await Administrator.findOne({                     // admin 계정을 탐색.
-        where: { userId: req.user.id }
-    })
+    const admin = await provideAdministrator.getTarget(req.user.id);
+
     if (admin) {                                            // passport로 권한을 얻고 url로 직접 접근하는 경우를 막음.
         isTrue = true                                        // admin 계정이 존재한다면 isTrue값을 true로 바꿈
 
-        const { percussions, winds, strings, keyboards } = await provide.getALL();
-        
+        const { percussions, winds, strings, keyboards } = await provideInstrument.getClassification();
+
         res.render('mainPage', {
             title: require('../package.json').name,
             port: process.env.PORT,
@@ -47,29 +46,18 @@ router.route('/createInstrument')                                 // 상품 추�
     })
     .post(async (req, res, next) => {
         const { name, cost, count, category, content } = req.body;
-        const instrument = await Instrument.findOne({ // 상품, 가격, 아이디를 비교함
-            where: {
-                name: name,
-                cost: cost,
-                creatorId: req.user.id,
-            }
-        });
+        const instrument = await provideInstrument.duplicateCheck(name, cost, req.user.id);
+
         if (instrument) {                   // 동일한 제품으로 판단되면, 개수만 더해줌.
             const increase = parseInt(instrument.count) + parseInt(count)
-            Instrument.update({ count: increase }, { where: { instrumentId: instrument.instrumentId } })
+            // increase, instrument.instrumentId
+            await provideInstrument.updateCount(increase, instrument.instrumentId);
             // res.send('중복 제품이 존재해 기존 제품에 추가되었습니다.');
-            res.write("<script>alert('중복 제품이 존재해 기존 제품에 추가되었습니다.')</script>");
+            res.write("<script>alert('Duplicate products exist.')</script>");
             res.write("<script>window.location=\"/administrator\"</script>");
         } else {
             try {
-                await Instrument.create({
-                    name,
-                    cost,
-                    category,
-                    count,
-                    description: content,
-                    creatorId: req.user.id,
-                });
+                await provideInstrument.createInstrument(name, cost, category, count, content, req.user.id);
                 res.redirect('/administrator');
             } catch (err) {
                 console.error(err);
@@ -77,10 +65,5 @@ router.route('/createInstrument')                                 // 상품 추�
             }
         }
     });
-
-
-router.route('/delete/:instrumentId');                                 // 상품 추가 요청
-
-router.route('/update/:instrumentId');
 
 module.exports = router;
