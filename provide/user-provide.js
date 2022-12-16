@@ -19,3 +19,4 @@ exports.updateUser = async (updateUser, id) => {
 exports.destroyUser = async (id) => {
     return await users.destroyUser(id);
 }
+
