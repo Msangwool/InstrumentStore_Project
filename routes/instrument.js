@@ -43,8 +43,7 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
             if (!instrument) {
                 updateContext['cost'] = cost
             } else if (instrument.instrumentId != req.params.instrumentId) {
-                res.write("<script>alert('Wrong Approach')</script>");
-                res.write(`<script>window.location=\"${link}\"</script>`);
+                res.json({fail:'Wrong Approach'});
                 return
             }
         }
@@ -54,15 +53,12 @@ router.post('/update/:instrumentId', isLoggedIn, async (req, res, next) => {
         const result = await provideInstrument.updateAll(updateContext, req.params.instrumentId);
 
         if (result) {
-            res.write("<script>alert('update complete')</script>");
-            res.write(`<script>window.location=\"${link}\"</script>`);
+            res.json({success:'update complete'});
         } else {
-            res.write("<script>alert('update fail')</script>");
-            res.write(`<script>window.location=\"${link}\"</script>`);
+            res.json({fail:'update fail'});
         }
     } else {
-        res.write("<script>alert('No permission')</script>");
-        res.write("<script>window.location=\"/main\"</script>");
+        res.json({fail:'No permission'});
     }
 });
 
@@ -87,16 +83,15 @@ router.get('/:instrumentId', async (req, res, next) => {
                 res.json(instruments);
             }
         } else {
-            res.write("<script>alert('No permission')</script>");
-            res.write("<script>window.location=\"/main\"</script>");
+            res.json({fail:'No permission'});
         }
     } else if (req.user) {
         // 사용자 권한
         res.render('instrumentPage', {
             title: require('../package.json').name,
             port: process.env.PORT,
-            html: 'purchase',                               // 구매 or 장바구니 목적.
-            user: req.user,                                 // 구매는 아예 사라지고, 장바구니는 안 사라짐.대신 선택만 count 개수에 맞게 해주도록.
+            html: 'purchase',                   // 구매 or 장바구니 목적.
+            user: req.user,                     // 구매는 아예 사라지고, 장바구니는 안 사라짐.대신 선택만 count 개수에 맞게 해주도록.
             link: '/basket',
             instruments,
         });
