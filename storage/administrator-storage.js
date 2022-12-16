@@ -4,3 +4,4 @@ const { Administrator } = require('../models');
 exports.getAdministrator = (userId) => Administrator.findOne({
     where: { userId: userId || null }
 })
+

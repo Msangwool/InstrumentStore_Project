@@ -25,3 +25,4 @@ exports.updateUser = (updateUser, id) => User.update(
 exports.destroyUser = (id) => User.destroy({
     where: { id }
 });
+
