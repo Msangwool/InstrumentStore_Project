@@ -14,7 +14,7 @@ router.route('/')
         if (baskets) {
             res.json(baskets);
         }
-        else { res.json({ 'success': '장바구니가 존재하지 않습니다.' }) }
+        else { res.json({ 'fail': '장바구니가 존재하지 않습니다.' }) }
     });
 
 // http://localhost:3000/basket/create
